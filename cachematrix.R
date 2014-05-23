@@ -31,17 +31,18 @@
 ## invB <- cacheSolve(cB)     # returns inverse of new B from cache
 ## 
         
-## 
-## function makeCacheMatrix(A = matrix())
-## --------------------------------------
-## 
+## ---------------------------------------------------------------------------
+
+makeCacheMatrix <- function(A = matrix()) {
+
+##
 ## arguments:
 ##      A: square matrix to act on, default = empty matrix
 ## 
-## returns a list of closures:
-##      set() set a new matrix, clears the cache
-##      get() get the matrix
-##      setinv() stores the inverse matrix
+## returns a list of 4 closures:
+##      set()    set a new matrix, clears the cache
+##      get()    get the matrix
+##      setinv() stores the inverse matrix into the cache
 ##      getinv() get the cached inverse matrix
 ##               returns NULL if no inverse matrix cached
 ##
@@ -50,7 +51,6 @@
 ## which, in this case, is the data within the makeCacheMatrix function
 ##
 
-makeCacheMatrix <- function(A = matrix()) {
   inv <- NULL                   # initialize
   set <- function(a) {          # setter:
     A <<- a                     # - store original matrix A
@@ -64,10 +64,10 @@ makeCacheMatrix <- function(A = matrix()) {
        getinv = getinv)
 }
 
+## ---------------------------------------------------------------------------
 
-## 
-## function cacheSolve(cA, ...)
-## ----------------------------
+cacheSolve <- function(cA, ...) {
+
 ## 
 ## arguments:
 ##      cA: closures prepared by makeCacheMatrix(A)
@@ -78,7 +78,6 @@ makeCacheMatrix <- function(A = matrix()) {
 ##      - otherwise: calculate the inverse of cA$A, and store it in cA$inv
 ##
 
-cacheSolve <- function(cA, ...) {
   invA <- cA$getinv()           # get cached value
   if(!is.null(invA)) {          # was previously chached ?
     message("getting cached data")
